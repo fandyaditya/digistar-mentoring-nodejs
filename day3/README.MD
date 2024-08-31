@@ -1,5 +1,3 @@
-Here's the markdown format:
-
 ## Praktik Langsung:
 - Membuat project baru.
 - Implementasi CRUD API (Create, Read, Update, Delete) untuk user.
