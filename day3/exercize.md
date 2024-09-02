@@ -29,10 +29,8 @@ Setiap item todo harus memiliki properti berikut:
 
 ## Petunjuk Implementasi
 
-- Gunakan `express.Router()` untuk mengelompokkan rute-rute terkait.
 - Buat fungsi-fungsi terpisah untuk setiap operasi CRUD untuk meningkatkan keterbacaan kode.
 - Gunakan `Date.now().toString()` untuk menghasilkan id unik saat membuat todo baru.
-- Sertakan komentar yang menjelaskan fungsi setiap bagian kode.
 - Validasi input yang diterima dari klien sebelum menyimpan data.
     - input dari POST semua harus diisi
     - input dari PUT hanya boleh mengubah description, date
