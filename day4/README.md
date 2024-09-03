@@ -1,6 +1,3 @@
-Here's the content converted to Markdown format:
-
-
 # Mengenal Query di MongoDB dan Referensi ke Koleksi Lain
 
 ## Pendahuluan:
