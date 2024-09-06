@@ -7,7 +7,7 @@ const userQuery = require('../database/mongodb/query');
 
 const options = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-    secretOrKey: process.env.JWT_SECRET, // Use your secret key from environment variables or config
+    secretOrKey: process.env.JWT_SECRET || 'default_secret_key', // Use your secret key from environment variables or config
     expiresIn: '30m' // Set token expiration to 30 minutes
   };
   

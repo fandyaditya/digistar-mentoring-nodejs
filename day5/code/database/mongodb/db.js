@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 
-const uri = "mongodb+srv://user:pass@host.mongodb.net/";
+const uri = "mongodb+srv://user:pass@host";
 const clientOptions = { serverApi: { version: '1', strict: true, deprecationErrors: true } };
 
 async function connectDB() {

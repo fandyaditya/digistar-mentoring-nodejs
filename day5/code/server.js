@@ -21,6 +21,8 @@ const verifyToken = require('./middlewares/jwt');
 // Import the passport middleware to authenticate and configure the passport authentication
 const { initializePassport, authenticatePassportJwt } = require('./middlewares/passport-jwt');
 // Initialize Passport
+
+const { logging } = require('./middlewares/logger');
 app.use(initializePassport());
 
 // Middleware to verify JWT tokens
@@ -93,9 +95,29 @@ app.post("/user/login", async (req, res) => {
     const token = await login(payload);
     res.status(200).json({ message: "Success login!", token });
   } catch (err) {
-    res.status(500).json({ error: 'Internal Server Error', message: err.message });
+    res.status(400).json({ error: 'Internal Server Error', message: err.message });
   }
 });
+
+app.post("/user/register", async (req, res) => {
+  const { name, email, password } = req.body;
+  const newUser = {
+    name,
+    email,
+    password
+  };
+  //check email first
+  const checkUser = await userQuery.findOneByEmail(email);
+  if (checkUser) {
+    return res.status(400).json({ error: 'Failed to register', message: 'Email already exists' });
+  }
+    userQuery.createUser(newUser).then((user) => {
+      // console.log(user)
+      res.status(201).send();
+    }).catch((error) => {
+      res.status(400).json({ error: 'Internal Server Error', message: error.message });
+    });
+})
 
 async function login(payload) {
   try {
@@ -104,7 +126,7 @@ async function login(payload) {
       throw new Error('Invalid email or password');
     }
     const user = {
-      userId: checkUser.user_id,
+      userId: checkUser.id,
       email: checkUser.email,
       password: checkUser.password
     };
@@ -112,8 +134,14 @@ async function login(payload) {
     if (!isValidPassword) {
       throw new Error('Invalid email or password');
     }
+
+    const claims = {
+      userId : user.userId,
+      email: user.email
+    }
+
     const key = process.env.JWT_SECRET || 'default_secret_key';
-    const token = jwt.sign(user, key, { expiresIn: '30m' });
+    const token = jwt.sign(claims, key, { expiresIn: '30m' });
     return token;
   } catch (error) {
     console.error('Error login: ', error);
@@ -122,7 +150,7 @@ async function login(payload) {
 }
 
 // Route to GET all orders - returns the orders array as JSON
-app.get('/orders', verifyToken, (req, res) => {
+app.get('/orders', logging, authenticatePassportJwt(), (req, res) => {
   userQuery.getOrders().then((orders) => {
     res.json(orders);
   });
@@ -146,7 +174,8 @@ app.put('/orders/:id', (req, res) => {
 });
 
 // Route to DELETE an order by id
-app.delete('/orders/:id', authenticatePassportJwt(), (req, res) => {
+//hanya bisa di akses oleh role "admin operation"
+app.delete('/orders/:id', authenticatePassportJwt(), checkRoles("admin-operation"), (req, res) => {
   const { id } = req.params; // Extract the id from the request parameters
   userQuery.deleteOrder(id).then(() => {
     res.status(204).send(); // Respond with no content and status code 204
