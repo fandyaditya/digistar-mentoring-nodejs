@@ -1,0 +1,194 @@
+{
+  "info": {
+    "_postman_id": "YOUR_UNIQUE_POSTMAN_COLLECTION_ID",
+    "name": "Your API Collection",
+    "description": "Collection of APIs for user and role management",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "User Authentication",
+      "item": [
+        {
+          "name": "User Login",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"your_email@example.com\",\n    \"password\": \"your_password\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/digistar/user/login",
+              "protocol": "https",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "digistar",
+                "user",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "User Registration",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"newuser\",\n    \"email\": \"newuser@example.com\",\n    \"password\": \"newuserpassword\",\n    \"role\": \"user\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/digistar/user/register",
+              "protocol": "https",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "digistar",
+                "user",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "User Management",
+      "item": [
+        {
+          "name": "Get All Users",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/digistar/user",
+              "protocol": "https",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "digistar",
+                "user"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get User by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/digistar/user/{{userId}}",
+              "protocol": "https",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "digistar",
+                "user",
+                "{{userId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update User by ID",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"updatedusername\",\n    \"email\": \"updateduser@example.com\",\n    \"password\": \"updatedpassword\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/digistar/user/{{userId}}",
+              "protocol": "https",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "digistar",
+                "user",
+                "{{userId}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Role Management",
+      "item": [
+        {
+          "name": "Create Role",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"newrole\",\n    \"position\": \"roleposition\",\n    \"stacks\": \"rolestacks\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/digistar/role",
+              "protocol": "https",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "digistar",
+                "role"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Roles",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/digistar/role",
+              "protocol": "https",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "digistar",
+                "role"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "protocolProfileBehavior": {}
+}
